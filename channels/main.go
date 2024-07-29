@@ -15,13 +15,14 @@ func main() {
 	wg:=& sync.WaitGroup{};
 
 	wg.Add(2);
-	go func (ch chan int , wg *sync.WaitGroup){
+	go func (ch <-chan int , wg *sync.WaitGroup){
 		// close(myCha)
 		fmt.Println(<-myCha);
 		fmt.Println(<-myCha);
+		// close(myCha)
 		wg.Done();
 	}(myCha,wg);
-	go func (ch chan int , wg *sync.WaitGroup){
+	go func (ch chan<- int , wg *sync.WaitGroup){
 		// close(myCha)
 		myCha<-5;
 		myCha<-6;
