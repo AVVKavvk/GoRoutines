@@ -7,6 +7,8 @@ import (
 	"sync"
 )
 var wg sync.WaitGroup;
+var mut sync.Mutex
+var data []string;
 func main() {
 
 	websites := []string{
@@ -31,6 +33,10 @@ func getDetailsOfWebsite(website string) {
 	if err!=nil {
 		log.Fatal(err);
 	}else{
+		mut.Lock()
+		data=append(data, website);
+		mut.Unlock()
+		
 		fmt.Printf("%v is the statuscode for %s \n",res.StatusCode,website);
 	}
 	defer wg.Done()
